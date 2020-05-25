@@ -50,26 +50,9 @@ scores = model.evaluate(X_test, y_test, verbose=0)
 print("Large CNN Error: %.2f%%" % (100-scores[1]*100))
 print("acuuracyis :",scores[1]*100)
 
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
+with open('acc.txt', 'w') as f:
+    f.write(str(scores[1]*100))
+model.save('mymodel.h1')
 
 
 
