@@ -1,21 +1,23 @@
-import smtpd
-import smtplib
-import getpass
-impot os
 f= open("/root/MLops-task/acc.txt" ,"r")
 a=f.read()
-
-s= smtplib.SMTP('smtp.gmail.com',   587)
-s.starttls()
-
-sender_email_id="vmukul41@gmail.com"
-sender_email_id_password=getpass.getpass("enter you password:")
-
-s.login(sender_email_id, sender_email_id_password)
-print("login sucessful")
-
-FROM='vmukul41@gmail.com'
-TO='mukulkumar@krishnacollege.ac.in'
-
-s.sendmail(FROM, TO, "the accuracy is : "+ str(a)+ "accuracy")
-s.quit()
+import getpass
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+host_address = "vmukul41@gmail.com"
+host_pass = getpass.getpass("enter your password:")
+guest_address = "mukulkumar@krishnacollege.ac.in"
+subject = "Regarding Success of your model "
+content = "congratulations your model trained successfully with"+ str(a)+ "accuracy";
+message = MIMEMultipart()
+message['From'] = host_address
+message['To'] = guest_address
+message['Subject'] = subject
+message.attach(MIMEText(content, 'plain'))
+session = smtplib.SMTP('smtp.gmail.com', 587)
+session.starttls()
+session.login(host_address, host_pass)
+text = message.as_string()
+session.sendmail(host_address, guest_address  , text)
+session.quit()
+print('Successfully sent your mail')
